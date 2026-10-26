@@ -12,11 +12,10 @@ app = Flask(__name__)
 def send_welcome(message):
   user_name = message.from_user.first_name
   welcome_text = (
-      f"👋 Merhaba **{user_name}**!\n\n"
-      "🤖 Botum artık **Render üzerinde 7/24 aktif**! Hoş geldin.\n\n"
-      "Keyifli vakit geçirmen dileğiyle! ✨"
+      f"Merhaba {user_name}!\n\n"
+      "Botum artık Render üzerinde 7/24 aktif ve başarıyla çalışıyor!"
   )
-  bot.reply_to(message, welcome_text, parse_mode="Markdown")
+  bot.reply_to(message, welcome_text)
 
 
 @app.route("/webhook", methods=["POST"])

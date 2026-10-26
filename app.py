@@ -20,10 +20,13 @@ def send_welcome(message):
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-  json_string = request.get_data().decode("utf-8")
-  update = telebot.types.Update.de_json(json_string)
-  bot.process_new_updates([update])
-  return "OK", 200
+  if request.headers.get("content-type") == "application/json":
+    json_data = request.get_json()
+    update = telebot.types.Update.de_json(json_data)
+    bot.process_new_updates([update])
+    return "", 200
+  else:
+    return "Forbidden", 403
 
 
 @app.route("/")
@@ -33,4 +36,3 @@ def index():
 
 if __name__ == "__main__":
   app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-  
